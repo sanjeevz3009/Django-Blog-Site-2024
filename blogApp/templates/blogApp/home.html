@@ -6,8 +6,8 @@
     <div class="d-flex align-items-start mb-3">
         <div class="media-body">
             <div class="d-flex justify-content-between align-items-center mb-2">
-                <h5 class="mb-0"><a class="fw-bold text-decoration-none" href="#">{{ post.author }}</a></h5>
-                <small class="text-muted">{{ post.date_posted }}</small>
+                <h5 class="mb-0"><a class="fw-bold text-decoration-none me-3" href="#">{{ post.author }}</a></h5>
+                <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
             </div>
             <h2 class="article-title fw-semibold mb-2"><a class="text-dark text-decoration-none" href="#">{{ post.title }}</a></h2>
             <p class="article-content text-muted">{{ post.content|truncatewords:50 }}</p>
