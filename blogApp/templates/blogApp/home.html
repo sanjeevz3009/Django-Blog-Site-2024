@@ -1,7 +1,19 @@
 {% extends "blogApp/base.html" %}
 
-{% block content %} {% for post in posts %}
-    <h1>{{ post.title }}</h1>
-    <p>By {{ post.author }} on {{ post.date_posted }}</p>
-    <p>By {{ post.content }}</p>
-{% endfor %} {% endblock %}
+{% block content %}
+{% for post in posts %}
+<article class="content-section mb-4">
+    <div class="d-flex align-items-start mb-3">
+        <div class="media-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0"><a class="fw-bold text-decoration-none" href="#">{{ post.author }}</a></h5>
+                <small class="text-muted">{{ post.date_posted }}</small>
+            </div>
+            <h2 class="article-title fw-semibold mb-2"><a class="text-dark text-decoration-none" href="#">{{ post.title }}</a></h2>
+            <p class="article-content text-muted">{{ post.content|truncatewords:50 }}</p>
+        </div>
+    </div>
+    <hr>
+</article>
+{% endfor %}
+{% endblock %}
