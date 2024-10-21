@@ -3,7 +3,7 @@
 {% block content %}
 <article class="content-section mb-4">
     <div class="d-flex align-items-start mb-3">
-        <img class="rounded-circle article-img me-3" src="{{ object.author.profile.image.url }}" alt="{{ post.title }}" width="50" height="50">
+        <img class="rounded-circle article-img me-3" src="{{ object.author.profile.image.url }}" alt="{{ object.title }}" width="50" height="50">
         <div class="media-body">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <h5 class="mb-0">
@@ -11,8 +11,16 @@
                 </h5>
                 <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
             </div>
+            
+            {% if object.author == user %}
+            <div>
+                <a class="btn btn-secondary btn-sm me-2" href="{% url 'post-update' object.id %}">Update</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'post-delete' object.id %}">Delete</a>
+            </div>
+            {% endif %}
+            
             <h2 class="article-title fw-semibold mb-2">{{ object.title }}</h2>
-            <p class="article-content text-muted">{{ object.content|truncatewords:50 }}</p>
+            <p class="article-content text-muted">{{ object.content }}</p>
         </div>
     </div>
     <hr>
