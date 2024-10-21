@@ -1,24 +1,44 @@
 {% extends "blogApp/base.html" %}
 
 {% block content %}
-{% for post in posts %}
-<article class="content-section mb-4">
-    <div class="d-flex align-items-start mb-3">
-        <img class="rounded-circle article-img me-3" src="{{ post.author.profile.image.url }}" alt="{{ post.title }}" width="50" height="50">
-        <div class="media-body">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <h5 class="mb-0">
-                    <a class="fw-bold text-decoration-none me-3" href="#">{{ post.author }}</a>
-                </h5>
-                <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+    {% for post in posts %}
+    <article class="content-section mb-4">
+        <div class="d-flex align-items-start mb-3">
+            <img class="rounded-circle article-img me-3" src="{{ post.author.profile.image.url }}" alt="{{ post.title }}" width="50" height="50">
+            <div class="media-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="mb-0">
+                        <a class="fw-bold text-decoration-none me-3" href="#">{{ post.author }}</a>
+                    </h5>
+                    <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                </div>
+                <h2 class="article-title fw-semibold mb-2">
+                    <a class="text-dark text-decoration-none" href="{% url 'post-detail' post.id %}">{{ post.title }}</a>
+                </h2>
+                <p class="article-content text-muted">{{ post.content|truncatewords:50 }}</p>
             </div>
-            <h2 class="article-title fw-semibold mb-2">
-                <a class="text-dark text-decoration-none" href="{% url 'post-detail' post.id %}">{{ post.title }}</a>
-            </h2>
-            <p class="article-content text-muted">{{ post.content|truncatewords:50 }}</p>
         </div>
-    </div>
-    <hr>
-</article>
-{% endfor %}
+        <hr>
+    </article>
+    {% endfor %}
+    {% if is_paginated %}
+        {% if page_obj.has_previous %}
+            <a href="?page=1" class="btn btn-outline-info mb-4">First</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-info mb-4">Previous</a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a href="?page={{ num }}" class="btn btn-info mb-4">{{ num }}</a>
+            {% elif num > page_obj.number|add:"-2" and num < page_obj.number|add:"2" %}
+                <a href="?page={{ num }}" class="btn btn-info mb-4">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-info mb-4">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-info mb-4">Last</a>
+        {% endif %}
+
+    {% endif %}
 {% endblock %}
