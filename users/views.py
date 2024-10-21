@@ -2,6 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
+from .mixins import RedirectAuthenticatedUserMixin
+
+
+class CustomLoginView(RedirectAuthenticatedUserMixin, LoginView):
+    template_name = "users/login.html"
 
 
 # Create your views here.
