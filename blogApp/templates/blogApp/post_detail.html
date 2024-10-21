@@ -7,7 +7,7 @@
         <div class="media-body">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <h5 class="mb-0">
-                    <a class="fw-bold text-decoration-none me-3" href="#">{{ object.author }}</a>
+                    <a class="fw-bold text-decoration-none me-3" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
                 </h5>
                 <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
             </div>
